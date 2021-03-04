@@ -1,3 +1,4 @@
+import java.util.Comparator;
 public class Person {
 	private String fName;
 	private String lName;
@@ -82,5 +83,17 @@ public class Person {
 				"Zip: " + zip + "\n" + 
 				"Phone: " + phone + "\n" + 
 				"Email: " + email;
+
+				"Email: " + email + "\n";
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Person) {
+			Person person = (Person) obj;
+			return fName.equals(person.fName);
+		}
+		return false;	
+
 	}
 }
