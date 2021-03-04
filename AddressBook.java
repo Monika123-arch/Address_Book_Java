@@ -121,6 +121,7 @@ public class AddressBook {
 			System.out.println("Contact doesn't exist");
 		}
 		
+
 	}
 	
 	public void deletePerson() {
@@ -143,6 +144,16 @@ public class AddressBook {
 		{
 			System.out.println("Contact doesn't exist");
 		}
+
+	}
+	
+	public void displayPerson() {
+		System.out.println(person);
+
 	}
 
 }
+
+
+
+
