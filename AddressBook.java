@@ -34,6 +34,7 @@ public class AddressBook {
         person.setPhone(phone);
         person.setEmail(email);
 
+
 	}
 	
 	public void displayPerson() {
@@ -121,6 +122,15 @@ public class AddressBook {
 			System.out.println("Contact doesn't exist");
 		}
 		
+
+	}
+	
+	public void displayPerson() {
+		System.out.println(person);
 	}
 
 }
+
+
+
+
