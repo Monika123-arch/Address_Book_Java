@@ -62,8 +62,7 @@ public class AddressBook {
 	
 	public void addPerson()
 	{
-		if(countAddressbook == 0)
-		{
+		if(countAddressbook == 0) {
 			System.out.println("There is no Address Book present. Please Create one AddressBook");
 			return;
 		}
@@ -73,18 +72,28 @@ public class AddressBook {
 		
 		Person person = new Person();
 		
-		System.out.println("Enter First Name");
-        String fName = scanner.nextLine();
+		String fName;
+		while(true) {
+			System.out.println("Enter First Name");
+	        fName = scanner.nextLine().toUpperCase();
+	        if(checkDuplicate(fName)) {
+	        	System.out.println("Person already exist! Please Enter different name");
+	        }
+	        else {
+	        	break;
+	        }
+		}
+		
         System.out.println("Enter Last Name");
-        String lName = scanner.nextLine();
+        String lName = scanner.nextLine().toUpperCase();
         System.out.println("Enter Address");
-        String address = scanner.nextLine();
+        String address = scanner.nextLine().toUpperCase();
         System.out.println("Enter City Name");
-        String city = scanner.nextLine();
+        String city = scanner.nextLine().toUpperCase();
         System.out.println("Enter the Zip Code");
         String zip = scanner.nextLine();
         System.out.println("Enter State Name");
-        String state = scanner.nextLine();
+        String state = scanner.nextLine().toUpperCase();
         System.out.println("Enter Phone Number");
         String phone = scanner.nextLine();
         System.out.println("Enter Email Id");
@@ -157,14 +166,12 @@ public class AddressBook {
 				contactFound = 1;
 				do {
 					choice = 0;
-					System.out.println("1: Edit First name \n" +
-										"2: Edit Last Name \n" +
-										"3: Edit Address \n" +
-										"4: Edit City \n" +
-										"5: Edit State \n" +
-										"6: Edit Zip \n" +
-										"7: Edit PhoneNumber \n" +
-			                	   		"8. Edit Email");
+					System.out.println("1: Edit Address \n" +
+										"2: Edit City \n" +
+										"3: Edit State \n" +
+										"4: Edit Zip \n" +
+										"5: Edit PhoneNumber \n" +
+			                	   		"6. Edit Email");
 					System.out.println("Enter Your choice: ");
 	 
 					int selectedOption = scanner.nextInt();
@@ -172,36 +179,26 @@ public class AddressBook {
 	 
 					switch (selectedOption) {
 						case 1:
-							System.out.println("Enter First Name ");
-							String fName = scanner.nextLine();
-							personList.get(index).setfName(fName);
-							break;
-						case 2:
-							System.out.println("Enter Last Name");
-							String lName = scanner.nextLine();
-							personList.get(index).setlName(lName);
-							break;
-						case 3:
 							System.out.println("Enter Address");
-							String address = scanner.nextLine();
+							String address = scanner.nextLine().toUpperCase();
 							personList.get(index).setAddress(address);
 							break;
-						case 4:
+						case 2:
 							System.out.println("Enter City");
-							String city = scanner.nextLine();
+							String city = scanner.nextLine().toUpperCase();
 							personList.get(index).setCity(city);
 							break;
-						case 5:
+						case 3:
 							System.out.println("Enter State");
-							String state = scanner.nextLine();
+							String state = scanner.nextLine().toUpperCase();
 							personList.get(index).setState(state);
 							break;
-						case 6:
+						case 4:
 							System.out.println("Enter Zip Code");
 							String zip=scanner.nextLine();
 							personList.get(index).setZip(zip);
 							break;
-						case 7:
+						case 5:
 							System.out.println("Enter Phone Number");
 							String phone = scanner.nextLine();
 							personList.get(index).setPhone(phone);
@@ -225,16 +222,14 @@ public class AddressBook {
 			}		 	 
 		}
 		
-		if(contactFound == 0)
-		{
+		if(contactFound == 0) {
 			System.out.println("Contact doesn't exist");
 		}
 		
 	}
 	
 	public void deletePerson() {
-		if(countAddressbook == 0)
-		{
+		if(countAddressbook == 0) {
 			System.out.println("There is no Address Book present. Please Create one AddressBook");
 			return;
 		}
@@ -258,10 +253,15 @@ public class AddressBook {
 			}
 		}
 		
-		if (contactFound == 0)
-		{
+		if (contactFound == 0) {
 			System.out.println("Contact not found");
 		}
+		
 	}
-
+	
+	public boolean checkDuplicate(String fName) {
+		List<Person> personList = addressBook.get(addressKey);
+		return personList.stream().anyMatch(person -> fName.equals(person.getfName()));
+	}
+	
 }
