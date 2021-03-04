@@ -315,6 +315,9 @@ public class AddressBook {
 			List<Person> personCity = personByCity.get(findCity);
 			long countByCity = personCity.stream().filter(person -> person.getCity().equalsIgnoreCase(findCity)).count();
 			System.out.println(countByCity + "Contact Found. \n");
+		String findCity = scanner.nextLine();
+		try {
+			List<Person> personCity = personByCity.get(findCity);
 			personCity.forEach(person -> {
 				System.out.println(person);
 			});
@@ -326,11 +329,16 @@ public class AddressBook {
 	
 	public void searchByState() {
 		System.out.println("Enter State");
+
 		String findState = scanner.nextLine().toUpperCase();
 		try {
 			List<Person> personState = personByState.get(findState);
 			long countByState = personState.stream().filter(person -> person.getState().equalsIgnoreCase(findState)).count();
 			System.out.println(countByState + " Contact Found. \n");
+		String findState = scanner.nextLine();
+		try {
+			List<Person> personState = personByState.get(findState);
+
 			personState.forEach(person -> {
 				System.out.println(person);
 			});
@@ -382,6 +390,8 @@ public class AddressBook {
 				}
 			});
 		}
-	}
+  }
 	
 }
+}
+
