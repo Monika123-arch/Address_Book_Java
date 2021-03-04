@@ -82,6 +82,8 @@ public class Person {
 				"State: " + state + "\n" + 
 				"Zip: " + zip + "\n" + 
 				"Phone: " + phone + "\n" + 
+				"Email: " + email;
+
 				"Email: " + email + "\n";
 	}
 	
@@ -92,5 +94,6 @@ public class Person {
 			return fName.equals(person.fName);
 		}
 		return false;	
+
 	}
 }
