@@ -1,31 +1,47 @@
-public class AddressBookMain {
-	private String first_name;
-	private String last_name;
-	private String city;
-	private String state;
-	private int pin_code;
-	private String phone_number;
-	private String email;
+import java.util.Scanner;
+
+public class AddressBook {
 	
-	public AddressBookMain(String first_name, String last_name, String city, String state, int pin_code, String phone_number, String email) {
-		this.first_name = first_name;
-		this.last_name = last_name;
-		this.city = city;
-		this.state = state;
-		this.pin_code = pin_code;
-		this.phone_number = phone_number;
-		this.email = email;
+	Person person = new Person();
+	Scanner scanner = new Scanner(System.in);
+	
+	public void addPerson()
+	{
+		
+		System.out.println("Enter First Name");
+        String fName = scanner.nextLine();
+        System.out.println("Enter Last Name");
+        String lName = scanner.nextLine();
+        System.out.println("Enter Address");
+        String address = scanner.nextLine();
+        System.out.println("Enter City Name");
+        String city = scanner.nextLine();
+        System.out.println("Enter the Zip Code");
+        String zip = scanner.nextLine();
+        System.out.println("Enter State Name");
+        String state = scanner.nextLine();
+        System.out.println("Enter Phone Number");
+        String phone = scanner.nextLine();
+        System.out.println("Enter Email Id");
+        String email = scanner.nextLine();
+        
+        person.setfName(fName);
+        person.setlName(lName);
+        person.setAddress(address);
+        person.setCity(city);
+        person.setZip(zip);
+        person.setState(state);
+        person.setPhone(phone);
+        person.setEmail(email);
+
 	}
 	
-	public static void main(String[] args) {
-		System.out.println("WELCOME to Address Book Program");
-		AddressBookMain entry = new AddressBookMain("Monika", "Kale", "Mumbai", "Mharastra", 410222, "8983456723", "monikakale@gmail.com");
-		System.out.println("First name: " + entry.first_name);
-		System.out.println("Last name: " + entry.last_name);
-		System.out.println("City: " + entry.city);
-		System.out.println("State: " + entry.state);
-		System.out.println("Pin code: " + entry.pin_code);
-		System.out.println("Phone number: " + entry.phone_number);
-		System.out.println("E-Mail: " + entry.email);
+	public void displayPerson() {
+		System.out.println(person);
 	}
+
 }
+
+
+
+
