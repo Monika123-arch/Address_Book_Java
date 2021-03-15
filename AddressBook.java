@@ -6,8 +6,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -31,6 +29,8 @@ public class AddressBook {
 			Path path = Paths.get("addressbook.txt");
 			FileOutputStream fileOutputStream = new FileOutputStream(path.toFile());
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+			objectOutputStream.writeInt(countAddressbook);
+			objectOutputStream.writeObject(addressList);
 			objectOutputStream.writeObject(addressBook);
 			objectOutputStream.flush();
 			objectOutputStream.close();
@@ -44,16 +44,9 @@ public class AddressBook {
 			Path path = Paths.get("addressbook.txt");
 			FileInputStream fileInputStream = new FileInputStream(path.toFile());
 			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+			countAddressbook = objectInputStream.readInt();
+			addressList = (String[]) objectInputStream.readObject();
 			addressBook = (Map<String, List<Person>>) objectInputStream.readObject();
-			countAddressbook = 0;
-			for(int i = 0; i < addressBook.size(); i++) {
-				countAddressbook++;
-			}
-			int i = 0;
-			for(Map.Entry k : addressBook.entrySet()) {
-				addressList[i] = (String) k.getKey();
-				i++;
-			}
 			objectInputStream.close();
 			fileInputStream.close();
 		}
@@ -168,7 +161,7 @@ public class AddressBook {
         
 		maintainDictionaryCity();
 		maintainDictionaryState();
-
+		
 		writeAddressBookInFile();
 		
         System.out.println("Contact Added");
@@ -294,7 +287,7 @@ public class AddressBook {
 		}
 		
 		writeAddressBookInFile();
-
+		
 	}
 	
 	public void deletePerson() throws IOException {
@@ -331,8 +324,7 @@ public class AddressBook {
 			maintainDictionaryState();
 		}
 		
-	 writeAddressBookInFile();
-
+		writeAddressBookInFile();
 		
 	}
 	
@@ -379,10 +371,7 @@ public class AddressBook {
 		try {
 			List<Person> personCity = personByCity.get(findCity);
 			long countByCity = personCity.stream().filter(person -> person.getCity().equalsIgnoreCase(findCity)).count();
-
 			System.out.println(countByCity + " Contact Found. \n");
-			System.out.println(countByCity + "Contact Found. \n");
-
 			personCity.forEach(person -> {
 				System.out.println(person);
 			});
@@ -433,53 +422,6 @@ public class AddressBook {
 	
 	public void maintainDictionaryState() {
 		personByState.clear();
-		}
-	}
-	
-	public void maintainDictionaryState() {
-
-		}
-	}
-	
-	public void maintainDictionaryState() {
-		personByState.clear();
-
-		String findCity = scanner.nextLine();
-		try {
-			List<Person> personCity = personByCity.get(findCity);
-			personCity.forEach(person -> {
-				System.out.println(person);
-			});
-		} 
-		catch (NullPointerException e) {
-			System.out.println("No Contact Found");
-		}
-	}
-	
-	public void searchByState() {
-		System.out.println("Enter State");
-
-		String findState = scanner.nextLine().toUpperCase();
-		try {
-			List<Person> personState = personByState.get(findState);
-			long countByState = personState.stream().filter(person -> person.getState().equalsIgnoreCase(findState)).count();
-			System.out.println(countByState + " Contact Found. \n");
-		String findState = scanner.nextLine();
-		try {
-			List<Person> personState = personByState.get(findState);
-
-			personState.forEach(person -> {
-				System.out.println(person);
-			});
-		} 
-		catch (NullPointerException e) {
-			System.out.println("No Contact Found");
-		}
-	}
-	
-	public void maintainDictionaryCity() {
-		personByCity.clear();
-
 		for(int address = 0; address < countAddressbook; address++) {
 			addressKey = addressList[address];
 			List<Person> personList = addressBook.get(addressKey);
@@ -497,7 +439,6 @@ public class AddressBook {
 			        personByState.put(state,personState);
 				}
 			});
-
 		}
 	}
 	
@@ -507,100 +448,6 @@ public class AddressBook {
 		if(countAddressbook == 0) {
 			System.out.println("There is no Address Book present. Please Create one AddressBook");
 			return;
-	}
-	
-	public void sortPerson() {
-		if(countAddressbook == 0) {
-			System.out.println("There is no Address Book present. Please Create one AddressBook");
-			return;
-
-		}
-	}
-	
-	public void sortPerson() {
-		if(countAddressbook == 0) {
-			System.out.println("There is no Address Book present. Please Create one AddressBook");
-			return;
-		}
-		boolean isTerminate = false;
-		while(!isTerminate) {
-			System.out.println("1.Sort By Name");
-			System.out.println("2.Back");
-			System.out.println("Enter Your Choice");
-			int choice = scanner.nextInt();
-			scanner.nextLine();
-			switch (choice) {
-				case 1:
-					sortByName();
-					break;
-				case 2:
-					isTerminate = true;
-					break;
-				default:
-					System.out.println("Please Enter Correct Option...");
-			}
-		}
-	}
-	
-	public void sortByName() {
-		
-		getAddressBook();
-		selectAddressBook();
-		
-		List<Person> personList = addressBook.get(addressKey);
-		
-		personList = personList.stream()
-					.sorted((person1, person2) -> person1.getfName().compareTo(person2.getfName()))
-					.collect(Collectors.toList());
-		addressBook.put(addressKey, personList);
-		
-		System.out.println(addressKey + " AddressBook Sorted By Name Successfully");
-	}
-				String city = person.getCity();
-				try {
-					List<Person> personCity = personByCity.get(city);
-					personCity.add(person);
-					personByCity.put(city,personCity);
-				} 
-				catch (NullPointerException e) {
-					personByCity.put(city,new LinkedList<Person>());
-					List<Person> personCity = personByCity.get(city);
-			        personCity.add(person);
-			        personByCity.put(city,personCity);
-				}
-			});
-
-		}
-		boolean isTerminate = false;
-		while(!isTerminate) {
-			System.out.println("1.Sort By Name");
-			System.out.println("2.Sort By City");
-			System.out.println("3.Sort By State");
-			System.out.println("4.Sort By Zip");
-			System.out.println("5.Back");
-			System.out.println("Enter Your Choice");
-			int choice = scanner.nextInt();
-			scanner.nextLine();
-			switch (choice) {
-				case 1:
-					sortByName();
-					break;
-				case 2:
-					sortByCity();
-					break;
-				case 3:
-					sortByState();
-					break;
-				case 4:
-					sortByZip();
-					break;
-				case 5:
-					isTerminate = true;
-					break;
-				default:
-					System.out.println("Please Enter Correct Option...");
-			}
-
 		}
 		boolean isTerminate = false;
 		while(!isTerminate) {
@@ -683,26 +530,10 @@ public class AddressBook {
 		
 		System.out.println(addressKey + " AddressBook Sorted By State Successfully. \n");
 	}
-
+	
 	public void sortByZip() throws IOException {
 		readAddressBookInFile();
-
-	public void sortByName() {
-		
 		getAddressBook();
-		selectAddressBook();
-		
-		List<Person> personList = addressBook.get(addressKey);
-		personList = personList.stream()
-					.sorted((person1, person2) -> person1.getfName().compareTo(person2.getfName()))
-					.collect(Collectors.toList());
-		addressBook.put(addressKey, personList);
-		
-		System.out.println(addressKey + " AddressBook Sorted By Name Successfully. \n");
-	}
-	
-	public void sortByCity() {
-				getAddressBook();
 		selectAddressBook();
 		
 		List<Person> personList = addressBook.get(addressKey);
@@ -713,65 +544,8 @@ public class AddressBook {
 		addressBook.put(addressKey, personList);
 		
 		writeAddressBookInFile();
-					.sorted((person1, person2) -> person1.getCity().compareTo(person2.getCity()))
-					.collect(Collectors.toList());
-		addressBook.put(addressKey, personList);
 		
-		System.out.println(addressKey + " AddressBook Sorted By City Successfully. \n");
-	}
-	
-	public void sortByState() {
-		
-		getAddressBook();
-		selectAddressBook();
-		
-		List<Person> personList = addressBook.get(addressKey);
-		
-		personList = personList.stream()
-					.sorted((person1, person2) -> person1.getState().compareTo(person2.getState()))
-					.collect(Collectors.toList());
-		addressBook.put(addressKey, personList);
-		
-		System.out.println(addressKey + " AddressBook Sorted By State Successfully. \n");
-	}
-	
-	public void sortByZip() {
-		
-		getAddressBook();
-		selectAddressBook();
-		
-		List<Person> personList = addressBook.get(addressKey);
-		
-		personList = personList.stream()
-					.sorted((person1, person2) -> person1.getZip().compareTo(person2.getZip()))
-					.collect(Collectors.toList());
-		addressBook.put(addressKey, personList);
 		System.out.println(addressKey + " AddressBook Sorted By Zip Successfully. \n");
 	}
 	
-	public void maintainDictionaryState() {
-		personByState.clear();
-		for(int address = 0; address < countAddressbook; address++) {
-			addressKey = addressList[address];
-			List<Person> personList = addressBook.get(addressKey);
-			personList.forEach(person -> {
-				String state = person.getState();
-				try {
-					List<Person> personState = personByState.get(state);
-					personState.add(person);
-					personByState.put(state,personState);
-				} 
-				catch (NullPointerException e) {
-					personByState.put(state,new LinkedList<Person>());
-					List<Person> personState = personByState.get(state);
-			        personState.add(person);
-			        personByState.put(state,personState);
-				}
-			});
-		}
-  }
-
-	
 }
-}
-
