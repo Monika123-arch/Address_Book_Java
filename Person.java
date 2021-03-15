@@ -1,5 +1,11 @@
+import java.io.Serializable;
+
+public class Person implements Serializable{
+	private static final long serialVersionUID = 7485550907486938782L;
+
 import java.util.Comparator;
 public class Person {
+
 	private String fName;
 	private String lName;
 	private String address;
@@ -83,7 +89,6 @@ public class Person {
 				"Zip: " + zip + "\n" + 
 				"Phone: " + phone + "\n" + 
 				"Email: " + email;
-
 				"Email: " + email + "\n";
 	}
 	
@@ -94,6 +99,5 @@ public class Person {
 			return fName.equals(person.fName);
 		}
 		return false;	
-
 	}
 }
