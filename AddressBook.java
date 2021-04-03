@@ -263,6 +263,23 @@ public class AddressBook {
 		function.sort(sorted_stream).forEach(this::display);
 	}
 	
+	public void writeToCSV() {
+		if(new FileIOOpenCSV().writeData(record)) {
+			System.out.println("Write Successful.");
+		}
+	}
+	
+	public ArrayList<Contacts> readFromCSV(){
+		ArrayList<Contacts> fileRecord=new FileIOOpenCSV().readData();
+		if(fileRecord!=null) {
+			for (Contacts c:fileRecord) {
+				c.display();
+			}
+			return fileRecord;
+		}else System.out.println("Nothing to read!!");
+		return null;
+	}
+	
 	public static void main(String[] args) {
 
 		AddressBook buildObj=new AddressBook();
@@ -410,14 +427,11 @@ public class AddressBook {
 			}
 			case "9": {
 				buildObj.writeToFile();
+				buildObj.writeToCSV();
 				break;
 			}
 			case "10": {
-				ArrayList<Contacts> fileRecord=buildObj.readFromFile();
-				
-				for (Contacts c:fileRecord) {
-					c.display();
-				}
+				buildObj.readFromCSV();
 				break;
 			}
 			case "11": {
