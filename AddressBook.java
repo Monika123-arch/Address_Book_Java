@@ -263,6 +263,40 @@ public class AddressBook {
 		function.sort(sorted_stream).forEach(this::display);
 	}
 	
+	public void writeToCSV() {
+		if(new FileIOOpenCSV().writeData(record)) {
+			System.out.println("Write to CSV Successful.");
+		}
+	}
+	
+	public ArrayList<Contacts> readFromCSV(){
+		ArrayList<Contacts> fileRecord=new FileIOOpenCSV().readData();
+		if(fileRecord!=null) {
+			for (Contacts c:fileRecord) {
+				c.display();
+			}
+			return fileRecord;
+		}else System.out.println("Nothing to read!!");
+		return null;
+	}
+	
+	public void writeToJSON() {
+		if(new FileIOGson().writeData(record)) {
+			System.out.println("Write to JSON Successful.");
+		}
+	}
+	
+	public ArrayList<Contacts> readFromJSON() {
+		ArrayList<Contacts> fileRecord=new FileIOGson().readData();
+		if(fileRecord!=null) {
+			for (Contacts c:fileRecord) {
+				c.display();
+			}
+			return fileRecord;
+		}else System.out.println("Nothing to read!!");
+		return null;
+	}
+	
 	public static void main(String[] args) {
 
 		AddressBook buildObj=new AddressBook();
@@ -283,7 +317,7 @@ public class AddressBook {
 		buildObj.addToRecord(entry2,"AddressBook1");				//Adding entry to record
 		System.out.println(entry2);
 		person_cityMap.put("Jaipur",entry2);
-		person_stateMap.put("Raj",entry2);
+		person_stateMap.put("Ram",entry2);
 
 		//initiating user functions of entries
 
@@ -410,14 +444,12 @@ public class AddressBook {
 			}
 			case "9": {
 				buildObj.writeToFile();
+				buildObj.writeToCSV();
+				buildObj.writeToJSON();
 				break;
 			}
 			case "10": {
-				ArrayList<Contacts> fileRecord=buildObj.readFromFile();
-				
-				for (Contacts c:fileRecord) {
-					c.display();
-				}
+				buildObj.readFromJSON();
 				break;
 			}
 			case "11": {
